@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EF.RPC.Server" />
+        <module name="EF.RPC.Impl" />
+        <module name="EF.RPC.Sharing" />
+        <module name="EF.RPC.Test" />
+        <module name="EF.RPC.Impl.RabbitMQImpl" />
+        <module name="EF.RPC.Client" />
+        <module name="EF.RPC.Serialize" />
+        <module name="EF.RPC.Impl.WebSocketImpl" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

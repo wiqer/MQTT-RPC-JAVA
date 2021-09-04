@@ -1,0 +1,9 @@
+# Project exclude paths
+/EF.RPC.Client/target/
+/EF.RPC.Impl/target/
+/EF.RPC.Impl.RabbitMQImpl/target/
+/EF.RPC.Impl.WebSocketImpl/target/
+/EF.RPC.Serialize/target/
+/EF.RPC.Server/target/
+/EF.RPC.Sharing/target/
+/EF.RPC.Test/target/
