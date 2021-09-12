@@ -11,6 +11,7 @@
         <module name="EF.RPC.Sharing" />
         <module name="EF.RPC.Test" />
         <module name="EF.RPC.Impl.RabbitMQImpl" />
+        <module name="EF.RPC.Impl.NettyImpl" />
         <module name="EF.RPC.Client" />
         <module name="EF.RPC.Serialize" />
         <module name="EF.RPC.Impl.WebSocketImpl" />

@@ -7,14 +7,13 @@ import com.wiqer.rpc.impl.core.BaseMsgFun;
 import com.wiqer.rpc.impl.proxy.ObjectProxy;
 import com.wiqer.rpc.impl.util.ServiceUtil;
 import com.wiqer.rpc.rabbitmqiml.RabbitMQMsgFun;
-import com.wiqer.rpc.rabbitmqiml.RabbitMQRpcClient;
+import com.wiqer.rpc.rabbitmqiml.producerImpl.RabbitMQRpcClient;
 import com.wiqer.rpc.serialize.JsonSerializer;
 import com.wiqer.rpc.serialize.SerializerInterface;
 import com.wiqer.rpc.serialize.SuperMsgMulti;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.UUID;

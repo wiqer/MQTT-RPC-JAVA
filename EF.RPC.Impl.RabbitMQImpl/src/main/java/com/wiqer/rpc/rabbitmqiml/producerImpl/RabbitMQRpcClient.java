@@ -1,6 +1,5 @@
-package com.wiqer.rpc.rabbitmqiml;
+package com.wiqer.rpc.rabbitmqiml.producerImpl;
 
-import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.wiqer.rpc.impl.RpcClient;

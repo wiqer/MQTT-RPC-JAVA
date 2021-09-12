@@ -17,6 +17,7 @@
         <module>EF.RPC.Server</module>
         <module>EF.RPC.Sharing</module>
         <module>EF.RPC.Impl.WebSocketImpl</module>
+        <module>EF.RPC.Impl.NettyImpl</module>
     </modules>
 
     <properties>

@@ -16,7 +16,7 @@
 <!--        <constructor-arg name="registryAddress" value="${registry.address}"/>-->
 <!--    </bean>-->
 
-    <bean id="rpcServer" class="com.wiqer.rpc.rabbitmqiml.RabbitMQRpcServer">
+    <bean id="rpcServer" class="com.wiqer.rpc.rabbitmqiml.consumerImpl.RabbitMQRpcServer">
         <constructor-arg name="serverAddress" value="${server.address}"/>
     </bean>
 

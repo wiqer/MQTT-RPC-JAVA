@@ -1,4 +1,4 @@
-package com.wiqer.rpc.rabbitmqiml;
+package com.wiqer.rpc.rabbitmqiml.consumerImpl;
 
 import com.rabbitmq.client.*;
 import com.wiqer.rpc.impl.RpcServer;
@@ -31,6 +31,12 @@ public class RabbitMQRpcServer extends RpcServer {
             Class<?> serviceClass = serviceBean.getClass();
             Method[] methods= serviceClass.getMethods();
             Arrays.stream(methods).forEach(method->{
+                //方法名
+                String methodName = method.getName();
+                //参数集合
+                if (methodName.equals("toString") || methodName.equals("equals") || methodName.equals("hashCode") ||
+                        methodName.equals("getClass")|| methodName.equals("notify") || methodName.equals("notifyAll")
+                        || methodName.equals("wait") ) return;
                 //防止方法重复
                 String queName=serviceName + "." + method.getName();
                 EFRpcMethod[] efRpcMethod=method.getAnnotationsByType(EFRpcMethod.class);

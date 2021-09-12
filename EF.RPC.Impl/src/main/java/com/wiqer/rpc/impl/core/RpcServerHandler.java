@@ -13,9 +13,14 @@ public class RpcServerHandler implements ServerHandler {
         this.serializer=serializer;
     }
     private static final Logger logger = LoggerFactory.getLogger(RpcServerHandler.class);
+    @Override
     public String handle(String request, Object serviceBean, Method method) throws Throwable {
 
         SuperMsgMulti superMsg =serializer.DeSerializeString(request,SuperMsgMulti.class);
+        return handle( superMsg,  serviceBean,  method);
+    }
+    @Override
+    public String handle(SuperMsgMulti superMsg, Object serviceBean, Method method) throws Throwable {
         if (serviceBean == null) {
             logger.error("Can not find service implement ");
             return null;

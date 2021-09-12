@@ -7,5 +7,5 @@ import java.lang.reflect.Method;
 
 public interface ServerHandler {
      String handle(String request, Object serviceBean, Method method) throws Throwable;
-
+     String handle(SuperMsgMulti superMsg, Object serviceBean, Method method) throws Throwable;
 }
