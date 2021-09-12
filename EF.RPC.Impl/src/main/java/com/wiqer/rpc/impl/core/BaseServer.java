@@ -21,19 +21,7 @@ public abstract class BaseServer  extends Server {
     private int maxPoolSize=32;
     private String serviceName=BaseServer.class.getSimpleName();
     protected Map<String, Object> serviceMap = new HashMap<>();
-    protected ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-            corePoolSize,
-            maxPoolSize,
-            60L,
-            TimeUnit.SECONDS,
-            new LinkedBlockingQueue<Runnable>(1000),
-            new ThreadFactory() {
-                @Override
-                public Thread newThread(Runnable r) {
-                    return new Thread(r, "netty-rpc-" + serviceName + "-" + r.hashCode());
-                }
-            },
-            new ThreadPoolExecutor.AbortPolicy());
+
 
     public BaseServer(String serverAddress ) {
         this.serverAddress = serverAddress;

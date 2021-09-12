@@ -2,6 +2,7 @@ package com.wiqer.rpc.rabbitmqiml;
 
 import com.rabbitmq.client.*;
 import com.wiqer.rpc.impl.RpcServer;
+import com.wiqer.rpc.impl.annotation.EFRpcMethod;
 import com.wiqer.rpc.impl.core.RpcServerHandler;
 import com.wiqer.rpc.impl.core.ServerHandler;
 import com.wiqer.rpc.serialize.JsonSerializer;
@@ -31,15 +32,19 @@ public class RabbitMQRpcServer extends RpcServer {
             Method[] methods= serviceClass.getMethods();
             Arrays.stream(methods).forEach(method->{
                 //防止方法重复
-                AtomicReference<String> queName= new AtomicReference<>(serviceName + "." + method.getName());
-                   Arrays.stream(method.getParameterTypes()).forEach(classType->{
-                       queName.set(queName.get()+classType.toString().hashCode()%100+"");
-                    });
+                String queName=serviceName + "." + method.getName();
+                EFRpcMethod[] efRpcMethod=method.getAnnotationsByType(EFRpcMethod.class);
+                if(efRpcMethod!=null||efRpcMethod.length>0){
+                    queName+=efRpcMethod[0].mark();
+                }
+//                   Arrays.stream(method.getParameterTypes()).forEach(classType->{
+//                       queName.set(queName.get()+classType.toString().hashCode()%100+"");
+//                    });
                     try (Connection connection = factory.newConnection();
                          Channel channel = connection.createChannel()) {
-                        channel.queueDeclare(queName.get(), false, false, false, null);
-                        channel.queuePurge(queName.get());
-                        System.out.println("注册队列：(" + queName.get() + ")");
+                        channel.queueDeclare(queName, false, false, false, null);
+                        channel.queuePurge(queName);
+                        System.out.println("注册队列：(" + queName+ ")");
                         channel.basicQos(1);
                         System.out.println(" [x] Awaiting RPC requests");
                         Object monitor = new Object();
@@ -71,7 +76,7 @@ public class RabbitMQRpcServer extends RpcServer {
                             }
                         };
 
-                        channel.basicConsume(queName.get(), false, deliverCallback, (consumerTag -> {
+                        channel.basicConsume(queName, false, deliverCallback, (consumerTag -> {
                         }));
                     } catch (TimeoutException e) {
                         e.printStackTrace();

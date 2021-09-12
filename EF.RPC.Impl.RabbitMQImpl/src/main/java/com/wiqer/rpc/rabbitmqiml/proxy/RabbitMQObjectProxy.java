@@ -2,6 +2,7 @@ package com.wiqer.rpc.rabbitmqiml.proxy;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
+import com.wiqer.rpc.impl.annotation.EFRpcMethod;
 import com.wiqer.rpc.impl.core.BaseMsgFun;
 import com.wiqer.rpc.impl.proxy.ObjectProxy;
 import com.wiqer.rpc.impl.util.ServiceUtil;
@@ -36,12 +37,13 @@ public class RabbitMQObjectProxy extends ObjectProxy {
                     methodName.equals("getClass")|| methodName.equals("notify") || methodName.equals("notifyAll")
                     || methodName.equals("wait") ) return;
             String serviceName = ServiceUtil.makeServiceKey(methodName, version);
-            AtomicReference<String> queName= new AtomicReference<>(serviceName + "." + method.getName());
-            Arrays.stream(method.getParameterTypes()).forEach(classType->{
-                queName.set(queName.get()+classType.toString().hashCode()%100+"");
-            });
+            String queName= serviceName + "." + method.getName();
+            EFRpcMethod[] efRpcMethod=method.getAnnotationsByType(EFRpcMethod.class);
+            if(efRpcMethod!=null||efRpcMethod.length>0){
+                queName+=efRpcMethod[0].mark();
+            }
             
-            BaseMsgFun baseMsgFun =(BaseMsgFun)this.get(queName.get());
+            BaseMsgFun baseMsgFun =(BaseMsgFun)this.get(queName);
             RabbitMQMsgFun rabbitMQMsgFun =new RabbitMQMsgFun();
             BeanUtils.copyProperties(baseMsgFun,rabbitMQMsgFun);
             if (baseMsgFun.getResponseType() !=Void.class)
@@ -62,7 +64,7 @@ public class RabbitMQObjectProxy extends ObjectProxy {
                             .build();
                     rabbitMQMsgFun.setProperties(props);
                     rabbitMQMsgFun.setChannel(channel);
-                    this.put(queName.get(),rabbitMQMsgFun);
+                    this.put(queName,rabbitMQMsgFun);
                     String ctag = channel.basicConsume(replyQueueName, true, (consumerTag, delivery) -> {
                         if (delivery.getProperties().getCorrelationId().equals(corrId)) {
                             SuperMsgMulti superMsg = this.serializer.DeSerializeString(
