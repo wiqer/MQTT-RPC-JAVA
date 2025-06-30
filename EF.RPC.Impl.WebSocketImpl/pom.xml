@@ -14,6 +14,35 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <netty.version>4.1.86.Final</netty.version>
     </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.wiqer</groupId>
+            <artifactId>EF.RPC.Impl</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- Netty WebSocket支持 -->
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        
+        <!-- JSON处理 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        
+        <!-- 日志支持 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

@@ -85,7 +85,51 @@ public class NettyClient {
 
         return allSuccess;
     }
-
-
+    
+    /**
+     * 发送消息
+     */
+    public boolean sendMessage(byte[] message) {
+        if (channels.isEmpty()) {
+            log.error("没有可用的连接");
+            return false;
+        }
+        
+        try {
+            // 选择第一个可用连接发送消息
+            Channel channel = channels.get(0);
+            if (channel != null && channel.isActive()) {
+                ByteBuf byteBuf = Unpooled.copiedBuffer(message);
+                channel.writeAndFlush(byteBuf);
+                return true;
+            } else {
+                log.error("连接不可用");
+                return false;
+            }
+        } catch (Exception e) {
+            log.error("发送消息失败", e);
+            return false;
+        }
+    }
+    
+    /**
+     * 发送消息到指定地址
+     */
+    public boolean sendMessage(String address, byte[] message) {
+        Channel channel = channelMap.get(address);
+        if (channel != null && channel.isActive()) {
+            try {
+                ByteBuf byteBuf = Unpooled.copiedBuffer(message);
+                channel.writeAndFlush(byteBuf);
+                return true;
+            } catch (Exception e) {
+                log.error("发送消息到 {} 失败", address, e);
+                return false;
+            }
+        } else {
+            log.error("地址 {} 的连接不可用", address);
+            return false;
+        }
+    }
 
 }

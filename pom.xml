@@ -13,6 +13,7 @@
         <module>EF.RPC.Client</module>
         <module>EF.RPC.Impl</module>
         <module>EF.RPC.Impl.RabbitMQImpl</module>
+        <module>EF.RPC.Impl.MQTTImpl</module>
         <module>EF.RPC.Serialize</module>
         <module>EF.RPC.Server</module>
         <module>EF.RPC.Sharing</module>
